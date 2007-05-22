@@ -69,13 +69,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/swiftiply
 %dir %{ruby_rubylibdir}/swiftcore
 %{ruby_rubylibdir}/swiftcore/Swiftiply.rb
 #%attr(755,root,root) %{ruby_archdir}/*.so
 
 %files mongrel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/swiftiply_mongrel_rails
 %{ruby_rubylibdir}/swiftcore/evented_mongrel.rb
 %{ruby_rubylibdir}/swiftcore/swiftiplied_mongrel.rb
 
