@@ -69,6 +69,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc CONTRIBUTORS README
 %attr(755,root,root) %{_bindir}/swiftiply
 %dir %{ruby_rubylibdir}/swiftcore
 %{ruby_rubylibdir}/swiftcore/Swiftiply.rb
