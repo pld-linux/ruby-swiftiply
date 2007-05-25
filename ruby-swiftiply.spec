@@ -1,4 +1,5 @@
-Summary:	Ruby reverse reverse-proxy application server
+Summary:	Ruby reverse-proxy application server
+Summary(pl.UTF-8):	Serwer odwrotnego proxy aplikacji dla języka Ruby
 Name:		ruby-swiftiply
 Version:	0.5.1
 Release:	1
@@ -19,7 +20,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Swiftiply is a backend agnostic clustering proxy for web applications
 that is specifically designed to support HTTP traffic from web
 frameworks. Unlike Pen (http://siag.nu/pen/), Swiftiply is not
-intended as a general purpose load balancer for tcp protocols and
+intended as a general purpose load balancer for TCP protocols and
 unlike HAProxy (http://haproxy.1wt.eu/), it is not a highly
 configurable general purpose proxy overflowing with features.
 
@@ -30,8 +31,24 @@ backend processes) and, depending on your web framework, you may not
 even need to put a traditional web server into your architecture at
 all.
 
+%description -l pl.UTF-8
+Swiftiply to niezależny od backendu klastrowy serwer proxy dla
+aplikacji WWW, zaprojektowany z myślą o obsłudze ruchu HTTP ze
+szkieletów WWW. W przeciwieństwie do Pena (http://siag.nu/pen/)
+Swiftiply nie ma być load balancerem ogólnego przeznaczenia dla
+protokołów TCP i w przeciwieństwie do HAProxy (http://haproxy.1wt.eu/)
+nie jest wysoko konfigurowalnym proxy ogólnego przeznaczenia
+przepełnionym możliwościami.
+
+jest jednak bardzo szybkim proxy klastrowym o wąskich zastosowaniach.
+W porównaniach do HAProxy Swiftiply wiarygodnie zwycięża pod względem
+wydajności (testowane z procesami backendów IOWA, Rails i Ramaze)
+oraz, w zależności od szkieletu WWW, może nawet wyeliminować potrzebę
+uruchamiania tradycyjnego serwera WWW.
+
 %package mongrel
 Summary:	Swiftiply patch to Mongrel HTTP Server
+Summary(pl.UTF-8):	Poprawka Swiftiply dla serwera HTTP Mongrel
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
 Requires:	ruby-mongrel
@@ -39,14 +56,21 @@ Requires:	ruby-mongrel
 %description mongrel
 Swiftiply patch to Mongrel HTTP Server.
 
+%description mongrel -l pl.UTF-8
+Poprawka Swiftiply dla serwera HTTP Mongrel.
+
 %package ramaze
 Summary:	Swiftiply support for Ramaze framework
+Summary(pl.UTF-8):	Obsługa Swiftiply dla szkieletu Ramaze
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
 Requires:	ruby-ramaze
 
 %description ramaze
 Swiftiply support for Ramaze framework.
+
+%description ramaze -l pl.UTF-8
+Obsługa Swiftiply dla szkieletu Ramaze.
 
 %prep
 %setup -q -c -T
