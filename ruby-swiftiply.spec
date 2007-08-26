@@ -4,9 +4,9 @@ Name:		ruby-swiftiply
 Version:	0.6.1
 Release:	1
 License:	Ruby
-Group:		Development/Libraries
+Group:		Development/Languages
 #Source0:	http://swiftiply.swiftcore.org/files/swiftiply-%{version}.tar.bz2
-Source0:	http://rubyforge.org/frs/download.php/24061/swiftiply-0.6.1.tar.bz2
+Source0:	http://rubyforge.org/frs/download.php/24061/swiftiply-%{version}.tar.bz2
 # Source0-md5:	301dfb533afcd0c7c05b1f2431de6a99
 URL:		http://swiftiply.swiftcore.org/
 BuildRequires:	libstdc++-devel
@@ -15,6 +15,7 @@ BuildRequires:	ruby-devel
 BuildRequires:	ruby-modules
 %{?ruby_mod_ver_requires_eq}
 Requires:	ruby-eventmachine
+Obsoletes:	ruby-swiftiply-ramaze
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -41,7 +42,7 @@ protokołów TCP i w przeciwieństwie do HAProxy (http://haproxy.1wt.eu/)
 nie jest wysoko konfigurowalnym proxy ogólnego przeznaczenia
 przepełnionym możliwościami.
 
-jest jednak bardzo szybkim proxy klastrowym o wąskich zastosowaniach.
+Jest jednak bardzo szybkim proxy klastrowym o wąskich zastosowaniach.
 W porównaniach do HAProxy Swiftiply wiarygodnie zwycięża pod względem
 wydajności (testowane z procesami backendów IOWA, Rails i Ramaze)
 oraz, w zależności od szkieletu WWW, może nawet wyeliminować potrzebę
@@ -50,8 +51,8 @@ uruchamiania tradycyjnego serwera WWW.
 %package mongrel
 Summary:	Swiftiply patch to Mongrel HTTP Server
 Summary(pl.UTF-8):	Poprawka Swiftiply dla serwera HTTP Mongrel
-Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Group:		Development/Languages
+Requires:	%{name} = %{version}-%{release}
 Requires:	ruby-mongrel
 
 %description mongrel
@@ -84,12 +85,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{ruby_rubylibdir}/swiftcore
 %{ruby_rubylibdir}/swiftcore/Swiftiply.rb
 %dir %{ruby_rubylibdir}/swiftcore/Swiftiply
+%{ruby_rubylibdir}/swiftcore/Swiftiply/support_pagecache.rb
+%{ruby_rubylibdir}/swiftcore/Swiftiply/swiftiply_client.rb
+%{ruby_rubylibdir}/swiftcore/types.rb
 %attr(755,root,root) %{ruby_archdir}/*.so
-#/usr/bin/echo_client
-#/usr/bin/mongrel_rails
-/usr/lib/ruby/1.8/swiftcore/Swiftiply/support_pagecache.rb
-/usr/lib/ruby/1.8/swiftcore/Swiftiply/swiftiply_client.rb
-/usr/lib/ruby/1.8/swiftcore/types.rb
 
 %files mongrel
 %defattr(644,root,root,755)
