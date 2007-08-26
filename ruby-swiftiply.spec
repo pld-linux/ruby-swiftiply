@@ -1,17 +1,18 @@
 Summary:	Ruby reverse-proxy application server
 Summary(pl.UTF-8):	Serwer odwrotnego proxy aplikacji dla języka Ruby
 Name:		ruby-swiftiply
-Version:	0.5.1
+Version:	0.6.1
 Release:	1
 License:	Ruby
 Group:		Development/Libraries
-Source0:	http://swiftiply.swiftcore.org/files/swiftiply-%{version}.gem
-# Source0-md5:	f979a55ef5d1e56cbd6ad1a389a35351
+#Source0:	http://swiftiply.swiftcore.org/files/swiftiply-%{version}.tar.bz2
+Source0:	http://rubyforge.org/frs/download.php/24061/swiftiply-0.6.1.tar.bz2
+# Source0-md5:	301dfb533afcd0c7c05b1f2431de6a99
 URL:		http://swiftiply.swiftcore.org/
+BuildRequires:	libstdc++-devel
 BuildRequires:	rpmbuild(macros) >= 1.277
 BuildRequires:	ruby-devel
 BuildRequires:	ruby-modules
-BuildRequires:	setup.rb
 %{?ruby_mod_ver_requires_eq}
 Requires:	ruby-eventmachine
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -59,34 +60,19 @@ Swiftiply patch to Mongrel HTTP Server.
 %description mongrel -l pl.UTF-8
 Poprawka Swiftiply dla serwera HTTP Mongrel.
 
-%package ramaze
-Summary:	Swiftiply support for Ramaze framework
-Summary(pl.UTF-8):	Obsługa Swiftiply dla szkieletu Ramaze
-Group:		Development/Libraries
-Requires:	%{name} = %{version}
-Requires:	ruby-ramaze
-
-%description ramaze
-Swiftiply support for Ramaze framework.
-
-%description ramaze -l pl.UTF-8
-Obsługa Swiftiply dla szkieletu Ramaze.
-
 %prep
-%setup -q -c -T
-tar xf %{SOURCE0} -O data.tar.gz | tar xzv-
+%setup -n swiftiply-%{version}
 
 %build
-cp %{_datadir}/setup.rb .
-mv src lib
-ruby setup.rb config --rbdir=%{ruby_rubylibdir} --sodir=%{ruby_archdir}
-ruby setup.rb setup
+ruby setup.rb config --vendor
+ruby setup.rb setup --no-doc
+
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{ruby_rubylibdir}
 
-ruby setup.rb install --prefix=$RPM_BUILD_ROOT
+ruby setup.rb install --destdir=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -97,15 +83,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/swiftiply
 %dir %{ruby_rubylibdir}/swiftcore
 %{ruby_rubylibdir}/swiftcore/Swiftiply.rb
-#%attr(755,root,root) %{ruby_archdir}/*.so
+%dir %{ruby_rubylibdir}/swiftcore/Swiftiply
+%attr(755,root,root) %{ruby_archdir}/*.so
+#/usr/bin/echo_client
+#/usr/bin/mongrel_rails
+/usr/lib/ruby/1.8/swiftcore/Swiftiply/support_pagecache.rb
+/usr/lib/ruby/1.8/swiftcore/Swiftiply/swiftiply_client.rb
+/usr/lib/ruby/1.8/swiftcore/types.rb
 
 %files mongrel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/swiftiply_mongrel_rails
 %{ruby_rubylibdir}/swiftcore/evented_mongrel.rb
 %{ruby_rubylibdir}/swiftcore/swiftiplied_mongrel.rb
-
-%files ramaze
-%defattr(644,root,root,755)
-%{ruby_rubylibdir}/ramaze/adapter/evented_mongrel.rb
-%{ruby_rubylibdir}/ramaze/adapter/swiftiplied_mongrel.rb
